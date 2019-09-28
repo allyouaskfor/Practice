@@ -6,7 +6,7 @@ let mesh;
 
 const AMOUNT = 6;
 
-const container = document.querySelector('#three-canv');
+const bannerTjs = document.querySelector('#three-canv');
 
 function init() {
 
@@ -16,6 +16,7 @@ function init() {
     camera = new THREE.PerspectiveCamera(
         20,
         window.innerWidth / window.innerHeight,
+//        bannerTjs.clientWidth / bannerTjs.clientHeight, 
         0.1,
         100
     );
@@ -28,7 +29,12 @@ function init() {
     } );
     
     renderer.setSize( window.innerWidth, window.innerHeight );
+//    renderer.setSize( bannerTjs.clientWidth, bannerTjs.clientHeight );
     renderer.setPixelRatio( window.devicePixelRatio );
+    
+    renderer.gammaFactor = 2.2;
+    renderer.gammaOutput = true;
+    
     document.body.appendChild( renderer.domElement );
     
     renderer.setAnimationLoop( () => {
@@ -40,8 +46,13 @@ function init() {
 
     // Object
     geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load( 'textures/uv_map_basic.png' );
+    texture.encoding = THREE.sRGBEncoding;
+    texture.anisotropy = 16;
     material = new THREE.MeshStandardMaterial( {
-        color: 0xff4083
+        color: 0xa64696,
+        map: texture,
     } );
     
     mesh = new THREE.Mesh( geometry, material );
@@ -50,20 +61,21 @@ function init() {
     scene.add( mesh );
 
     // Lights
-    const color = 0x66d9ed;
-    const intensity = 1;
-    const light = new THREE.AmbientLight( color, intensity );
+    const ambLight = new THREE.AmbientLight( {
+        color: 0xf2ec91,
+        intensity: 1
+    } );
+    
+    ambLight.position.set( 0, 1, 0 );
+    
+    scene.add( ambLight );
 
-    light.position.set( 0, 1, 0 );
-    scene.add( light );
+    const dirLight = new THREE.DirectionalLight();
+    dirLight.position.set( 0.5, 0.5, 1 );
+    dirLight.castShadow = true;
+    dirLight.shadow.camera.zoom = 4;
 
-    const light2 = new THREE.DirectionalLight();
-    light2.position.set( 0.5, 0.5, 1 );
-    light2.castShadow = true;
-    light2.shadow.camera.zoom = 4;
-
-//    light2.position.set( 10, 10, 10 );
-    scene.add( light2 );
+    scene.add( dirLight );
 
 }
 
