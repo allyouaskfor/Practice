@@ -8,27 +8,12 @@
     </head>
     <body id="body" class="body">
         <div class="overlay wrapper"></div>
-<!--        <div id="three-canv" class="wrapper"></div> -->
+        <div id="three-canv" class="wrapper"></div>
 
-        <script>
-            document.body.style = "touch-action: none; user-select: none;";
-        </script>
-        <script src="js/three.js"></script>
+        <script src="js/vendor/three.js"></script>
+        <script src="js/vendor/OrbitControls.js"></script>
+        <script src="js/vendor/TrackballControls.js"></script>
         <script src="js/scene.js"></script>
-        
-        <!-- DEBUG CONSOLE -->
-        <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-        <script>
-            
-            let debug = document.createElement( 'div' );
-            document.body.appendChild( debug );
 
-            eruda.init( {
-                container: debug,
-                tool: [ 'console', 'network', 'resources', 'sources' ]
-            } );
-        </script>
-        <!-- END DEBUG CONSOLE-->
-        
     </body>
 </html>

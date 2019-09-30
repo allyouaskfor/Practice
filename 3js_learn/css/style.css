@@ -1,12 +1,19 @@
+/* -webkit-overflow-scrolling: touch; — to enable scrolling per element. */
+
 html {
     height: 100%;
 }
 
 body {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     margin: 0;
-    background: #C9CCD3;
-    background-image: linear-gradient(-180deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%);
-    background-blend-mode: lighten;    /* 'Sharp Glass' gradient */
+    background: linear-gradient(47deg, #434343 0%, #232526 100%);
+    touch-action: none;
+    user-select: none;
 }
 
 canvas {
@@ -20,16 +27,17 @@ canvas {
     top: 0;
     right: 0;
     left: 0;
+    border-bottom: 3px double #00ff00;
     z-index: -1;
 }
 
 .overlay {
     position: absolute;
-    background-color: #80808000;
+/*    background-color: #80808000; */
     z-index: 1;
 }
 
 .wrapper {
     width: 100%;
-    height: 10em;
+    height: 50%;
 }
