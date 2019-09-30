@@ -9,26 +9,37 @@
     </head>
 
     <body>
-
-         65471CB8-A30D-42AF-9A72-6CFCCF1CE2FC
+    
+        <!-- Eruda is an in-browser Javascript console compatible with mobile devices
+             and can be injected into most websites.
         
-        
+        To enable the Eruda toggle button, include a '<dbg>' tag below this comment.
+         -->
         
         <script src="//cdn.jsdelivr.net/npm/eruda"></script>
         <script>
             
-            const dbg = document.querySelector( 'dbg' );
+            const dbg = document.querySelector( 'dbg' );    // Find 'dbg' element
             
-            if ( dbg != null ) {
-                console.log( 'Debug flag set. Eruda loaded.' );
+            if ( dbg != null ) {    // Checks if 'dbg' exists. If so, continue.
+                console.log( '<dbg> found; Eruda loaded.' );    // Begin execute
             
                 let debug = document.createElement( 'div' );
                 document.body.appendChild( debug );
     
                 eruda.init( {
                     container: debug,
-                    tool: [ 'console', 'network', 'resources', 'sources' ]
+                    tool: [
+                        'console',
+                        'network',
+                        'resources',
+                        'sources'
+                    ] // End execute
                 } );
+            } else {
+
+                break;  // Stop script 
+
             }
 
         </script>
