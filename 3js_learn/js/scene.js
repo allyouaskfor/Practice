@@ -4,15 +4,19 @@
 # 
 */
 
-// Declaration
-let scene;
 let camera;
+let scene;
 let controls;
-let controlsO;
+let orbit;
+let ambLight;
+let dirLight;
 let renderer;
 let mesh;
-
-const AMOUNT = 6;
+let material;
+let geometry;
+let plane;
+let planeGeometry;
+let planeMaterial;
 
 const banner = document.querySelector('#three-canv');
 
@@ -21,11 +25,13 @@ function init() {
     scene = new THREE.Scene();
 
     createCamera();
-//    createControlsTrack();
-    createControlsOrbit();
+    trackballControl();
+//    orbitControls();
     createLights();
-    createPlane();
-    createMeshes();
+//    createPlane();
+    createMeshes( 0 );
+    createMeshes( -2 );
+    createMeshes( 2 );
     createRenderer();
     
     renderer.setAnimationLoop( () => {
@@ -53,37 +59,36 @@ function createCamera() {
 
 }
 
-function createControlsTrack() {
+function trackballControl() {
     controls = new THREE.TrackballControls( camera );
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.0;
     controls.panSpeed = 1.0;
-//    controls.staticMoving = true;
     controls.dynamicDampingFactor = 0.01;
 }
 
-function createControlsOrbit() {
-    controlsO = new THREE.OrbitControls( camera );
+function orbitControls() {
+    const orbit = new THREE.OrbitControls( camera );
 }
 
 function createLights() {
 
-    const ambLight = new THREE.HemisphereLight(
-        0x9dceff,   // Bright sky colour
-        0x404050,   // Dim ground colour
-        5,          // Intensity
+    ambLight = new THREE.HemisphereLight(
+        0x9dceff,
+        0x404050,
+        5,
     );
     scene.add( ambLight );
 
-    const dirLight = new THREE.DirectionalLight();
-    dirLight.intensity = 5;
-    dirLight.position.set( 1, 1, 0 );
+    dirLight = new THREE.DirectionalLight();
+    dirLight.intensity = 1;
+    dirLight.position.set( -1, 2, 4 );
     dirLight.castShadow = true;
     dirLight.shadow.camera.zoom = 1;
-
+    
     scene.add( dirLight );
-
-}
+    
+    }
 
 function createPlane() {
 
@@ -101,16 +106,12 @@ function createPlane() {
 
 }
 
-function createMeshes() {
+function createMeshes( x ) {
 
     geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
-    const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load( 'textures/uv_map_basic.png' );
-    texture.encoding = THREE.sRGBEncoding;
-    texture.anisotropy = 16;
-    material = new THREE.MeshStandardMaterial( {
+
+    material = new THREE.MeshPhongMaterial( {
         color: 0xa64696,
-//        map: texture,
     } );
     
     mesh = new THREE.Mesh( geometry, material );
@@ -118,6 +119,10 @@ function createMeshes() {
     mesh.receiveShadow = true;
     scene.add( mesh );
     
+    mesh.position.x = x;
+    
+    return mesh;
+
 }
 
 function createRenderer() {
@@ -141,16 +146,16 @@ function createRenderer() {
 }
 
 function update() {
-/*
+
     mesh.rotation.x += 0.005;
     mesh.rotation.y += 0.005;
     mesh.rotation.z += 0.01;
-*/
+
 }
 
 function render() {
 
-//    controls.update();
+    controls.update();
     renderer.render( scene, camera );
 
 }
