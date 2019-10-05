@@ -47,14 +47,12 @@ function createCamera() {
 
     camera = new THREE.PerspectiveCamera(
         20,
-//        window.innerWidth / window.innerHeight,
         banner.clientWidth / banner.clientHeight, 
         0.1,
         1000
 
     );
 
-//    camera.position.set( 0, 0, 10 );
     camera.position.set( -4, 4, 10 );
 
 }
@@ -131,8 +129,7 @@ function createRenderer() {
         alpha: true,
         antialias: true
     } );
-    
-//    renderer.setSize( window.innerWidth, window.innerHeight );
+
     renderer.setSize( banner.clientWidth, banner.clientHeight );
     renderer.setPixelRatio( window.devicePixelRatio );
     
